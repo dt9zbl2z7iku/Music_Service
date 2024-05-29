@@ -1,0 +1,537 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav {
+    background-color: #444;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.main-content-container {
+    display: flex;
+    flex: 1;
+    padding: 2rem;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 1.5rem;
+    border-radius: 8px;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.sidebar form {
+    margin-bottom: 1.5rem;
+}
+
+.sidebar form div {
+    margin-bottom: 1rem;
+}
+
+.sidebar form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.sidebar form input[type="text"],
+.sidebar form input[type="password"],
+.sidebar form select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.sidebar form button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar form button:hover {
+    background-color: #555;
+}
+
+.main-content {
+    flex: 1;
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.tracks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.track {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 1rem;
+    transition: transform 0.2s;
+}
+
+.track img {
+    width: 100%;
+    height: auto;
+}
+
+.track h3 {
+    margin: 0.5rem 0;
+}
+
+.track p {
+    margin: 0;
+    color: #666;
+}
+
+.track audio {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.track:hover {
+    transform: translateY(-10px);
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+.subscription-plans {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.plan {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.plan:hover {
+    transform: translateY(-10px);
+}
+
+.plan h3 {
+    color: #333; /* Черный цвет для заголовка */
+}
+
+.plan ul {
+    color: #666; /* Серый цвет для списка */
+}
+
+.btn-subscribe {
+    background-color: #000; /* Черный цвет для кнопки */
+    color: #fff; /* Белый цвет для текста кнопки */
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #333; /* Темно-серый цвет при наведении */
+}
+
+.auth-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333; /* Черный цвет для заголовка */
+}
+
+.auth-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form label {
+    margin-bottom: 5px;
+    color: #666; /* Серый цвет для текста метки */
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.auth-form button[type="submit"] {
+    background-color: #000; /* Черный цвет для кнопки */
+    color: #fff; /* Белый цвет для текста кнопки */
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-form button[type="submit"]:hover {
+    background-color: #333; /* Темно-серый цвет при наведении */
+}
+
+.auth-form hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ccc; /* Серый цвет для разделительной линии */
+}
+
+/* Стили для основного контейнера личного кабинета */
+.user-profile {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/*!*.user-profile {*!*/
+/*!*    width: 100%;*!*/
+/*!*    margin: 0 auto;*!*/
+/*!*    padding: 20px;*!*/
+/*!*    background-color: #fff;*!*/
+/*!*    border-radius: 8px;*!*/
+/*!*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*!*/
+/*!*}*!*/
+/*.user-profile {*/
+/*    padding: 20px;*/
+/*    background-color: #fff;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.profile-section {*/
+/*    display: flex;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.profile-avatar img {*/
+/*    width: 150px;*/
+/*    height: 150px;*/
+/*    border-radius: 50%;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*.profile-details {*/
+/*    margin-left: 20px;*/
+/*    flex-grow: 1;*/
+/*}*/
+
+/*.form-group {*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+/*.form-group label {*/
+/*    display: block;*/
+/*    margin-bottom: 5px;*/
+/*}*/
+
+/*.form-group input {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.save-btn {*/
+/*    padding: 10px 20px;*/
+/*    background-color: #333;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.save-btn:hover {*/
+/*    background-color: #555;*/
+/*}*/
+
+/*.track-table-container {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
+
+/*.track-table {*/
+/*    margin-top: 20px; !* Устанавливаем отступ сверху для контейнера с таблицей *!*/
+/*}*/
+
+/*.track-table table {*/
+/*    width: 100%; !* Занимает 100% ширины контейнера *!*/
+/*    border-collapse: collapse; !* Сливаем границы ячеек *!*/
+/*}*/
+
+/*.track-table th,*/
+/*.track-table td {*/
+/*    padding: 10px;*/
+/*    border: 1px solid #ddd;*/
+/*    text-align: left;*/
+/*}*/
+/*.track-table-container {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
+
+/*.track-table {*/
+/*    margin-top: 20px; !* Устанавливаем отступ сверху для контейнера с таблицей *!*/
+/*}*/
+
+/*.track-table table {*/
+/*    width: 100%; !* Занимает 100% ширины контейнера *!*/
+/*    border-collapse: collapse; !* Сливаем границы ячеек *!*/
+/*}*/
+
+/*.track-table th,*/
+/*.track-table td {*/
+/*    padding: 10px;*/
+/*    border: 1px solid #ddd;*/
+/*    text-align: left;*/
+/*}*/
+
+.user-profile {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.profile-avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-details {
+    margin-left: 20px;
+    flex-grow: 1;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 30%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Стили для рекомендаций */
+.recommendations {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Стили для карточек треков */
+.track-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.track-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.track-card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Стили для аудиоплеера */
+.audio-player {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.save-btn {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: #555;
+}
+
+.track-table {
+    margin-top: 20px;
+}
+
+.track-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.track-table th,
+.track-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.checkbox-item input {
+    margin-right: 5px;
+}
+
+.playlist-container {
+    display: flex;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    flex-direction: row;
+}
+
+.playlist-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.playlist-card:hover {
+    transform: translateY(-5px);
+}
+
+.playlist-header {
+    position: relative;
+}
+
+.playlist-cover {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.playlist-info {
+    padding: 20px;
+}
+
+.playlist-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.playlist-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.playlist-author {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 0;
+    font-style: italic;
+}
