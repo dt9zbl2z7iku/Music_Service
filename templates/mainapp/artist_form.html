@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}{% if artist %}Редактировать артиста{% else %}Добавить артиста{% endif %}{% endblock %}
+{% block content %}
+    <h1>{% if artist %}Редактировать артиста{% else %}Добавить артиста{% endif %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-submit">{% if artist %}Сохранить изменения{% else %}Добавить артиста{% endif %}</button>
+    </form>
+{% endblock %}

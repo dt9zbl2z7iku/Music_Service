@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ artist.name }}{% endblock %}
+{% block content %}
+    <style>
+        .artist-detail-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .artist-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .artist-detail-container h1 {
+            font-size: 2.5rem;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .artist-detail-container p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            text-align: justify;
+            margin: 20px 0;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-edit {
+            background-color: #28a745;
+        }
+
+        .btn-edit:hover {
+            background-color: #218838;
+        }
+    </style>
+    <div class="artist-detail-container">
+        <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-image">
+        <h1>{{ artist.name }}</h1>
+        <p>{{ artist.bio }}</p>
+        <div class="btn-container">
+            <a href="{% url 'edit_artist' artist.id %}" class="btn btn-edit">Редактировать</a>
+        </div>
+    </div>
+{% endblock %}

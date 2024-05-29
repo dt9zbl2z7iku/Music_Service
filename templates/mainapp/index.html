@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <div class="tracks">
+        {% for track in popular_tracks %}
+            <div class="track">
+                <img src="{% if track.cover_image %}{{ track.cover_image.url }}{% else %}{% static 'img/default-cover.png' %}{% endif %}" alt="{{ track.title }} cover">
+                <h3>{{ track.title }}</h3>
+                <p><a href="{% url 'artist_detail' track.artist.id %}" style="text-decoration: none; color: inherit"> {{ track.artist.name }}</a></p>
+                <audio controls data-track-id="{{ track.id }}">
+                    <source src="{{ track.audio_file.url }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

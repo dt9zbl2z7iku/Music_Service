@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% include 'includes/header.html' %}
+{% include 'includes/main-menu.html' %}
+<div class="main-content-container">
+    {% if sidebar %}
+        <div class="sidebar">
+            {% include 'includes/sidebar.html' %}
+        </div>
+    {% endif %}
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+{% include 'includes/footer.html' %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const audios = document.querySelectorAll('audio');
+        audios.forEach(audio => {
+            audio.addEventListener('play', function () {
+                const trackId = this.getAttribute('data-track-id');
+                fetch("{% url 'listen_track' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({track_id: trackId})
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status !== 'success') {
+                            alert('Произошла ошибка: ' + data.message);
+                        }
+                    });
+            });
+        });
+    });
+</script>
+</body>
+</html>

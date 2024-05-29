@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Мои аудио{% endblock %}
+{% block content %}
+    <style>
+        .track-list {
+            margin-top: 20px;
+        }
+
+        .track-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .track-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn:hover {
+            background-color: #555;
+        }
+    </style>
+    <h2>Мои аудио</h2>
+    <a href="{% url 'track_upload' %}" class="btn mb-3">Загрузить новый трек</a>
+    <div class="track-list">
+        {% for track in tracks %}
+            <div class="track-card">
+                <p class="track-title">{{ track.title }} - {{ track.artist.name }}</p>
+                <p>Альбом: {{ track.album.title }}</p>
+                <p>Жанр:
+                    {% for genre in track.genres.all %}
+                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <audio controls class="audio-player">
+                    <source src="{{ track.audio_file.url }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

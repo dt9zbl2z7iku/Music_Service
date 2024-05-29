@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Мои плейлисты{% endblock %}
+{% block content %}
+
+    <div class="playlist-container">
+        <a href="{% url 'add_playlist' %}" style="text-decoration: none; color: inherit">
+            <div class="playlist-card">
+                <div class="playlist-header">
+                    <img class="playlist-cover" src="{% static 'img/default-cover.png' %}" alt="Playlist Cover">
+                    <div class="playlist-info">
+                        <h2 class="playlist-name">Добавить плейлист</h2>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% for playlist in user_playlists %}
+            <a href="{% url 'playlist_detail' playlist.id %}" style="text-decoration: none; color: inherit">
+                <div class="playlist-card">
+                    <div class="playlist-header">
+                        <img class="playlist-cover" src="{% if playlist.cover_image %}{{ playlist.cover_image.url }}{% else %}{% static 'img/default-cover.png' %}{% endif %}" alt="Playlist Cover">
+                        <div class="playlist-info">
+                            <h2 class="playlist-name">{{ playlist.name }}</h2>
+                            <p class="playlist-description">{{ playlist.description }}</p>
+                            <div class="playlist-actions">
+                                <a href="{% url 'edit_playlist' playlist.id %}" class="btn btn-edit" style="text-decoration: none; color: inherit">Редактировать</a>
+                                <a href="{% url 'delete_playlist' playlist.id %}" class="btn btn-delete" style="text-decoration: none; color: inherit">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Плейлисты{% endblock %}
+
+{% block content %}
+
+    <div class="playlist-container">
+        {% for playlist in public_playlists %}
+            <a href="{% url 'playlist_detail' playlist.id %}" style="text-decoration: none; color: inherit">
+                <div class="playlist-card">
+                    <div class="playlist-header">
+                        <img class="playlist-cover" src="{% if playlist.cover_image %}{{ playlist.cover_image.url }}{% else %}{% static 'img/default-cover.png' %}{% endif %}" alt="Playlist Cover">
+                        <div class="playlist-info">
+                            <h2 class="playlist-name">{{ playlist.name }}</h2>
+                            <p class="playlist-description">{{ playlist.description }}</p>
+                            <p class="playlist-author">Created by: {{ playlist.user.username }}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

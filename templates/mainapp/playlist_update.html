@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Редактирование плейлиста{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="form-container">
+            <h2>Редактирование плейлиста</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_name">Название плейлиста</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="id_description">Описание</label>
+                    {{ form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="id_is_private">Приватный</label>
+                    {{ form.is_private }}
+                </div>
+                <div class="form-group">
+                    <label for="id_cover">Обложка</label>
+                    {% if form.cover.value %}
+                        <img src="{{ form.cover.value.url }}" alt="Текущая обложка" class="current-cover"/>
+                    {% endif %}
+                    {{ form.cover }}
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{#{% extends 'base.html' %}#}
+{#{% load static %}#}
+{##}
+{#{% block content %}#}
+{##}
+{#    <h2>Личная страница пользователя</h2>#}
+{##}
+{#    <div class="profile-section">#}
+{#        <div class="profile-avatar">#}
+{#            <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'img/default-avatar.jpg' %}{% endif %}" alt="Аватар">#}
+{#        </div>#}
+{#        <div class="profile-details">#}
+{#            <form method="post" action="{% url 'update_profile' %}" enctype="multipart/form-data">#}
+{#                {% csrf_token %}#}
+{#                <div class="form-group">#}
+{#                    <label for="first_name">Имя:</label>#}
+{#                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="last_name">Фамилия:</label>#}
+{#                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="phone">Телефон:</label>#}
+{#                    <input type="text" id="phone" name="phone" value="{{ user.profile.phone }}">#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="email">Email:</label>#}
+{#                    <input type="email" id="email" name="email" value="{{ user.email }}">#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="avatar">Аватар:</label>#}
+{#                    <input type="file" id="avatar" name="avatar">#}
+{#                </div>#}
+{#                <button type="submit" class="save-btn">Сохранить</button>#}
+{#            </form>#}
+{#        </div>#}
+{##}
+{##}
+{#        <h3>Прослушанные треки</h3>#}
+{#        <div class="track-table-container">#}
+{##}
+{#            <div class="track-table">#}
+{#                <table>#}
+{#                    <thead>#}
+{#                    <tr>#}
+{#                        <th>Название</th>#}
+{#                        <th>Исполнитель</th>#}
+{#                        <th>Альбом</th>#}
+{#                        <th>Действие</th>#}
+{#                    </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                    {% for track in listened_tracks %}#}
+{#                        <tr id="{{ track.id }}">#}
+{#                            <td>{{ track.track.title }}</td>#}
+{#                            <td>{{ track.track.artist.name }}</td>#}
+{#                            <td>{{ track.track.album.title }}</td>#}
+{#                            <td>#}
+{#                                <button class="hide-btn" id="{{ track.id }}" data-track-id="{{ track.track.id }}">Скрыть</button>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                    {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <script>#}
+{#        document.addEventListener('DOMContentLoaded', function () {#}
+{#            const hideButtons = document.querySelectorAll('.hide-btn');#}
+{#            hideButtons.forEach(button => {#}
+{#                button.addEventListener('click', function () {#}
+{#                    const historyId = this.getAttribute('id');#}
+{#                    fetch("{% url 'hide_track' %}", {#}
+{#                        method: 'POST',#}
+{#                        headers: {#}
+{#                            'Content-Type': 'application/json',#}
+{#                            'X-CSRFToken': '{{ csrf_token }}'#}
+{#                        },#}
+{#                        body: JSON.stringify({history_id: historyId})#}
+{#                    })#}
+{#                        .then(response => response.json())#}
+{#                        .then(data => {#}
+{#                            if (data.status === 'success') {#}
+{#                                document.getElementById(`track-${historyId}`).style.display = 'none';#}
+{#                            } else {#}
+{#                                alert('Произошла ошибка: ' + data.message);#}
+{#                            }#}
+{#                        });#}
+{#                });#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+{#{% endblock %}#}
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h2>Личная страница пользователя</h2>
+
+    <div class="profile-section">
+        <div class="profile-avatar">
+            <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'img/default-avatar.jpg' %}{% endif %}" alt="Аватар">
+        </div>
+        <div class="profile-details">
+            <form method="post" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="first_name">Имя:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Фамилия:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон:</label>
+                    <input type="text" id="phone" name="phone" value="{{ user.profile.phone }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}">
+                </div>
+                <div class="form-group">
+                    <label for="avatar">Аватар:</label>
+                    <input type="file" id="avatar" name="avatar">
+                </div>
+                <button type="submit" class="save-btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <h3>Прослушанные треки</h3>
+    <div class="track-table-container">
+        <div class="track-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Исполнитель</th>
+                    <th>Альбом</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for track in listened_tracks %}
+                    <tr id="{{ track.id }}">
+                        <td>{{ track.track.title }}</td>
+                        <td>{{ track.track.artist.name }}</td>
+                        <td>{{ track.track.album.title }}</td>
+                        <td>
+                            <button class="hide-btn" id="{{ track.id }}" data-track-id="{{ track.track.id }}">Скрыть</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hideButtons = document.querySelectorAll('.hide-btn');
+            hideButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const historyId = this.getAttribute('id');
+                    fetch("{% url 'hide_track' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({history_id: historyId})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                document.getElementById(`track-${historyId}`).style.display = 'none';
+                            } else {
+                                alert('Произошла ошибка: ' + data.message);
+                            }
+                        });
+                });
+            });
+        });
+    </script>
+
+{% endblock %}
