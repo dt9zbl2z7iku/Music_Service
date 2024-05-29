@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d4pwfw=zqu&-+6o!4d-4ta%7d@*n6^jlk6=v%zgn1zjje$f&n@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -66,20 +66,20 @@ WSGI_APPLICATION = 'Music_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'music_service.sqlite3',
-    }
-}
-
 # DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgres://carservice_ewv8_user:ji7XF0mcNZtPmAcOCGxZmVNEDRz7Yrbn@dpg-cp9knpkf7o1s73a2gfd0-a.oregon-postgres.render.com/carservice_ewv8',
-#         conn_max_age=600,
-#         ssl_require=True
-#     )
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'music_service.sqlite3',
+#     }
 # }
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgres://music_service_user:UujMM73xmhKeL7oTa6GAhOoMy5AxVOby@dpg-cpbhns5ds78s73evsj20-a.oregon-postgres.render.com/music_service',
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -120,6 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
