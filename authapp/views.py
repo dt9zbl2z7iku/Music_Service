@@ -74,7 +74,7 @@ class LoginView(FormView):
         print(user)
         if user is not None and user.is_active:
             login(self.request, user)
-            return HttpResponseRedirect(self.get_success_url())
+            return redirect('home')
         else:
             # Обработка ошибки аутентификации
             return self.form_invalid(form)

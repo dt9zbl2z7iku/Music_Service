@@ -25,7 +25,7 @@ class Track(models.Model):
     title = models.CharField(max_length=255)
     artist = models.ForeignKey(Artist, related_name='tracks', on_delete=models.CASCADE)
     genres = models.ManyToManyField(Genre, related_name='tracks')
-    cover_image = models.ImageField(upload_to='static/img', blank=True, null=True)
+    cover_image = models.ImageField(upload_to='static/img', blank=True, null=True, default='static/default-cover.png')
     audio_file = models.FileField(upload_to='static/audio')
     is_popular = models.BooleanField(default=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -50,7 +50,7 @@ class Playlist(models.Model):
     user = models.ForeignKey(User, related_name='playlists', on_delete=models.CASCADE)
     tracks = models.ManyToManyField(Track, related_name='playlists')
     created_at = models.DateTimeField(auto_now_add=True)
-    cover = models.ImageField(upload_to='static/img/', blank=True)
+    cover = models.ImageField(upload_to='static/img/', blank=True, default='static/default-cover.png')
     is_private = models.BooleanField(default=True)
     description = models.TextField(blank=True)
 
