@@ -1,79 +1,33 @@
-{#{% extends 'base.html' %}#}
-{##}
-{#{% block content %}#}
-{##}
-{##}
-{#    <div class="subscription-plans">#}
-{#        <h2>Выберите свой план подписки</h2>#}
-{#        <div class="plan free-plan">#}
-{#            <h3>Бесплатная</h3>#}
-{#            <ul>#}
-{#                <li>Доступ к ограниченному количеству треков</li>#}
-{#                <li>Реклама</li>#}
-{#                <li>Ограниченное количество плейлистов</li>#}
-{#            </ul>#}
-{#            <form method="post">#}
-{#                {% csrf_token %}#}
-{#                <input type="hidden" name="subscription_type" value="free">#}
-{#                <button type="submit" class="subscribe-btn">Оформить</button>#}
-{#            </form>#}
-{#        </div>#}
-{#        <div class="plan premium-plan">#}
-{#            <h3>Premium</h3>#}
-{#            <ul>#}
-{#                <li>Без рекламы</li>#}
-{#                <li>Неограниченное количество треков</li>#}
-{#                <li>Создание неограниченного количества плейлистов</li>#}
-{#            </ul>#}
-{#            <form method="post">#}
-{#                {% csrf_token %}#}
-{#                <input type="hidden" name="subscription_type" value="premium">#}
-{#                <button type="submit" class="subscribe-btn">Оформить</button>#}
-{#            </form>#}
-{#        </div>#}
-{#        <div class="plan pro-plan">#}
-{#            <h3>Pro</h3>#}
-{#            <ul>#}
-{#                <li>Все преимущества Premium</li>#}
-{#                <li>Эксклюзивные треки</li>#}
-{#                <li>Поддержка 24/7</li>#}
-{#            </ul>#}
-{#            <form method="post">#}
-{#                {% csrf_token %}#}
-{#                <input type="hidden" name="subscription_type" value="pro">#}
-{#                <button type="submit" class="subscribe-btn">Оформить</button>#}
-{#            </form>#}
-{#        </div>#}
-{#    </div>#}
-{#{% endblock %}#}
-
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if user.is_authenticated %}
+        <h2>У вас действует: {{ subscription.subscription_type }} {% if subscription.expiry_date %}до {{ subscription.expiry_date|date:"Y-m-d" }}{% endif %}</h2>
+    {% endif %}
     <div class="subscription-plans">
         <div class="plan free-plan">
             <h3>Бесплатная</h3>
             <ul>
                 <li>Доступ к ограниченному количеству треков</li>
-                <li>Реклама</li>
-                <li>Ограниченное количество плейлистов</li>
+                <li>Без истории прослушвания</li>
+                <li>Нет плейлистов</li>
             </ul>
             <form method="post">
                 {% csrf_token %}
-                <input type="hidden" name="subscription_type" value="free">
+                <input type="hidden" name="subscription_type" value="FREE">
                 <button type="submit" class="subscribe-btn">Оформить</button>
             </form>
         </div>
         <div class="plan premium-plan">
             <h3>Premium</h3>
             <ul>
-                <li>Без рекламы</li>
+                <li>История прослушивания</li>
                 <li>Неограниченное количество треков</li>
-                <li>Создание неограниченного количества плейлистов</li>
+                <li>Создание своих плейлистов</li>
             </ul>
             <form method="post">
                 {% csrf_token %}
-                <input type="hidden" name="subscription_type" value="premium">
+                <input type="hidden" name="subscription_type" value="PREMIUM">
                 <button type="submit" class="subscribe-btn">Оформить</button>
             </form>
         </div>
@@ -81,12 +35,12 @@
             <h3>Pro</h3>
             <ul>
                 <li>Все преимущества Premium</li>
-                <li>Эксклюзивные треки</li>
-                <li>Поддержка 24/7</li>
+                <li>Загрузка треков</li>
+
             </ul>
             <form method="post">
                 {% csrf_token %}
-                <input type="hidden" name="subscription_type" value="pro">
+                <input type="hidden" name="subscription_type" value="PRO">
                 <button type="submit" class="subscribe-btn">Оформить</button>
             </form>
         </div>

@@ -49,7 +49,6 @@
         {% for track in tracks %}
             <div class="track-card">
                 <p class="track-title">{{ track.title }} - {{ track.artist.name }}</p>
-                <p>Альбом: {{ track.album.title }}</p>
                 <p>Жанр:
                     {% for genre in track.genres.all %}
                         {{ genre.name }}{% if not forloop.last %}, {% endif %}

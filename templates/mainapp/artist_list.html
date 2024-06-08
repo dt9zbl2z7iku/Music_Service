@@ -90,10 +90,14 @@
                         <img src="{{ artist.image.url }}" alt="{{ artist.name }}">
                         <h2>{{ artist.name }}</h2>
                     </a>
-                    <a href="{% url 'edit_artist' artist.id %}" class="btn btn-edit">Редактировать</a>
+                    {% if user.is_staff %}
+                        <a href="{% url 'edit_artist' artist.id %}" class="btn btn-edit">Редактировать</a>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
-        <a href="{% url 'add_artist' %}" class="btn btn-add">Добавить артиста</a>
+        {% if user.is_staff %}
+            <a href="{% url 'add_artist' %}" class="btn btn-add">Добавить артиста</a>
+        {% endif %}
     </div>
 {% endblock %}

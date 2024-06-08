@@ -2,18 +2,13 @@
 {% block title %}Плейлист-{{ playlist.title }}{% endblock %}
 
 {% block content %}
-
+    </style>
     <div class="container mt-5">
         <div class="recommendations">
             {% for track in playlist.tracks.all %}
                 <div class="track-card">
                     <p class="track-title">{{ track.title }} - {{ track.artist.name }}</p>
-                    <p>Альбом: {{ track.album.title }}</p>
-                    <p>Жанр:
-                        {% for genre in track.genres.all %}
-                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </p>
+
                     <audio controls class="audio-player" data-track-id="{{ track.id }}">
                         <source src="{{ track.audio_file.url }}" type="audio/mpeg">
                         Your browser does not support the audio element.

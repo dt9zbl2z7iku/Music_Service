@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d4pwfw=zqu&-+6o!4d-4ta%7d@*n6^jlk6=v%zgn1zjje$f&n@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['music-service-isrb.onrender.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -74,15 +74,15 @@ WSGI_APPLICATION = 'Music_service.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://music_service_user:UujMM73xmhKeL7oTa6GAhOoMy5AxVOby@dpg-cpbhns5ds78s73evsj20-a.oregon-postgres.render.com/music_service',
-        conn_max_age=600,
-        ssl_require=True
-    ),
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'music_service.sqlite3',
-    # }
+    # 'default': dj_database_url.config(
+    #     default='postgres://music_service_user:UujMM73xmhKeL7oTa6GAhOoMy5AxVOby@dpg-cpbhns5ds78s73evsj20-a.oregon-postgres.render.com/music_service',
+    #     conn_max_age=600,
+    #     ssl_require=True
+    # ),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'music_service.sqlite3',
+    }
 }
 
 # Password validation
@@ -123,11 +123,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# URL для доступа к статическим файлам
 STATIC_URL = '/static/'
+
+# Директория для собранных статических файлов (используется в продакшн-среде)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Дополнительные директории с статическими файлами для разработки
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',
 ]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

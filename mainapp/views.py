@@ -28,13 +28,19 @@ class HomeView(ListView):
         context = super().get_context_data(**kwargs)
         context['sidebar'] = True
         context['genres'] = Genre.objects.all()
+        try:
+            context['day_track'] = Track.objects.get(id=2)
+        except Exception as e:
+            context['day_track'] = None
         return context
 
     def get_queryset(self):
         queryset = Track.objects.filter(is_popular=True)
-        genre_ids = self.request.GET.getlist('genre')
-        if genre_ids:
-            queryset = queryset.filter(genres__id__in=genre_ids).distinct()
+        genre_id = self.kwargs.get('genre_id')
+        if genre_id:
+            queryset = queryset.filter(genres__id=genre_id)
+        else:
+            queryset = queryset.all()
         return queryset
 
 
@@ -44,7 +50,6 @@ class SubscriptionView(View):
     def get(self, request, *args, **kwargs):
         user = request.user
         if not user.is_anonymous:
-            # Получаем или создаем подписку пользователя
             subscription, created = Subscription.objects.get_or_create(user=user)
             return render(request, self.template_name, {'subscription': subscription})
         return render(request, self.template_name)
@@ -60,13 +65,13 @@ class SubscriptionView(View):
         # Обновляем тип подписки и дату окончания
         subscription_type = request.POST.get('subscription_type')
         subscription.subscription_type = subscription_type
-        if subscription_type == Subscription.FREE:
+        if subscription_type == 'FREE':
             subscription.expiry_date = None
         else:
             subscription.expiry_date = now().date() + timedelta(days=30)
         subscription.save()
 
-        return redirect('home')
+        return redirect('subscription')
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -93,15 +98,14 @@ class PublicPlaylistsListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sidebar'] = True
         return context
 
 
 class PlaylistUpdateView(UpdateView):
     model = Playlist
-    fields = ['name', 'description', 'is_private']  # Поля, которые можно редактировать
-    template_name = 'mainapp/playlist_update.html'  # Шаблон для редактирования плейлиста
-    success_url = reverse_lazy('my_playlists')  # Перенаправление после успешного редактирования
+    fields = ['name', 'is_private']
+    template_name = 'mainapp/playlist_update.html'
+    success_url = reverse_lazy('my_playlists')
 
 
 class PlaylistDeleteView(DeleteView):
@@ -120,17 +124,13 @@ class PlaylistDeleteView(DeleteView):
 class PlaylistForm(forms.ModelForm):
     class Meta:
         model = Playlist
-        fields = ['name', 'description', 'is_private', 'cover']
+        fields = ['name', 'is_private', 'cover']
 
     existing_tracks = forms.ModelMultipleChoiceField(
         queryset=Track.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
         label="Выберите существующие треки"
-    )
-    new_track_file = forms.FileField(
-        required=False,
-        label="Загрузите новый трек"
     )
 
 
@@ -171,31 +171,8 @@ class PlaylistCreateView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user  # Set the user before saving the form
-        response = super().form_valid(form)
-        playlist = form.instance
-        existing_tracks = form.cleaned_data.get('existing_tracks')
-        new_track_file = self.request.FILES.get('new_track_file')
-
-        if existing_tracks:
-            playlist.tracks.add(*existing_tracks)
-
-        if new_track_file:
-            default_artist = Artist.objects.first()  # Получаем первого исполнителя как значение по умолчанию
-            if default_artist:
-                new_track = Track.objects.create(
-                    audio_file=new_track_file,
-                    title=new_track_file.name,
-                    owner=self.request.user,
-                    artist=default_artist
-                )
-                playlist.tracks.add(new_track)
-            else:
-                # Обработка ошибки, если нет доступного исполнителя
-                form.add_error(None, "Нет доступного исполнителя для назначения трека.")
-                return self.form_invalid(form)
-
-        return response
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class RecommendationsView(View):

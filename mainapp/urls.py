@@ -4,6 +4,7 @@ from mainapp.views import SubscriptionView, MyPlaylistsView, HomeView, ListenTra
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
+    path('genre_filter/<int:genre_id>/', HomeView.as_view(), name='genre_filter'),
     path('subscription/', SubscriptionView.as_view(), name='subscription'),
     path('listen_track/', ListenTrackView.as_view(), name='listen_track'),
     path('playlists/', PublicPlaylistsListView.as_view(), name='playlists'),

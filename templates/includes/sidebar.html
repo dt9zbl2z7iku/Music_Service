@@ -1,29 +1,86 @@
-<h2>Авторизация</h2>
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <div>
-        <label for="username">Логин:</label>
-        <input type="text" id="username" name="username">
-    </div>
-    <div>
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password">
-    </div>
-    <button type="submit">Войти</button>
-</form>
-<hr>
-<h2>Фильтрация</h2>
-<form method="get" action="{% url 'home' %}">
-    <div>
-        <label for="genre">Жанры:</label>
-        <div class="checkbox-group">
-            {% for genre in genres %}
-                <div class="checkbox-item">
-                    <input type="checkbox" id="genre_{{ genre.id }}" name="genre" value="{{ genre.id }}">
-                    <label for="genre_{{ genre.id }}">{{ genre.name }}</label>
-                </div>
-            {% endfor %}
+{% load static %}
+<style>
+    .sidebar form input[type="text"] {
+        width: 95%;
+    }
+
+    .sidebar form input[type="password"] {
+        width: 95%;
+    }
+
+    .genre-title {
+        font-size: 1.25rem;
+        margin-top: 1rem;
+        color: #333;
+    }
+    .genre-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .genre-item {
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #ddd;
+        transition: background-color 0.3s ease;
+    }
+    .genre-item:last-child {
+        border-bottom: none;
+    }
+    .genre-item:hover {
+        background-color: #f0f0f0;
+    }
+    .genre-link {
+        text-decoration: none;
+        color: #000; /* Ссылки черного цвета */
+        transition: color 0.3s ease;
+    }
+    .genre-link:hover {
+        color: #555; /* Темно-серый цвет при наведении */
+    }
+
+</style>
+{% if not user.is_authenticated %}
+    <h2>Авторизация</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div>
+            <label for="username">Логин:</label>
+            <input type="text" id="username" name="username">
         </div>
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <button type="submit">Войти</button>
+    </form>
+
+{% endif %}
+{% if genres %}
+    <hr>
+    <h2 class="genre-title">Жанры</h2>
+    <ul class="genre-list">
+        {% for genre in genres %}
+            <li class="genre-item">
+                <a href="{% url 'genre_filter' genre.id %}" class="genre-link">{{ genre.name }}</a>
+            </li>
+        {% endfor %}
+        <li class="genre-item">
+            <a href="{% url 'genre_filter' 0 %}" class="genre-link">Выбрать все</a>
+        </li>
+    </ul>
+{% endif %}
+
+{% if day_track %}
+    <hr>
+    <h2>Трек дня</h2>
+    <div class="track">
+        <img src="{% if day_track.cover_image %}{{ day_track.cover_image.url }}{% else %}{% static 'img/default-cover.png' %}{% endif %}" alt="{{ day_track.title }} cover">
+        <h3>{{ track.title }}</h3>
+        <p><a href="{% url 'artist_detail' day_track.artist.id %}" style="text-decoration: none; color: inherit"> {{ day_track.artist.name }}</a></p>
+        <audio controls data-track-id="{{ day_track.id }}">
+            <source src="{{ day_track.audio_file.url }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     </div>
-    <button type="submit">Фильтровать</button>
-</form>
+
+{% endif %}

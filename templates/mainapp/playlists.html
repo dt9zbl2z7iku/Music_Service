@@ -12,7 +12,6 @@
                         <img class="playlist-cover" src="{% if playlist.cover_image %}{{ playlist.cover_image.url }}{% else %}{% static 'img/default-cover.png' %}{% endif %}" alt="Playlist Cover">
                         <div class="playlist-info">
                             <h2 class="playlist-name">{{ playlist.name }}</h2>
-                            <p class="playlist-description">{{ playlist.description }}</p>
                             <p class="playlist-author">Created by: {{ playlist.user.username }}</p>
                         </div>
                     </div>

@@ -1,14 +1,13 @@
 from django.db import models
 from django.utils import timezone
 
-
 from authapp.models import User
 
 
 class Artist(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField(blank=True)
-    image = models.ImageField(upload_to='static/img/', blank=True)
+    image = models.ImageField(upload_to='img/', blank=True)
 
     def __str__(self):
         return self.name
@@ -25,8 +24,8 @@ class Track(models.Model):
     title = models.CharField(max_length=255)
     artist = models.ForeignKey(Artist, related_name='tracks', on_delete=models.CASCADE)
     genres = models.ManyToManyField(Genre, related_name='tracks')
-    cover_image = models.ImageField(upload_to='static/img', blank=True, null=True, default='static/default-cover.png')
-    audio_file = models.FileField(upload_to='static/audio')
+    cover_image = models.ImageField(upload_to='static/img/', blank=True, null=True, default='static/img/default-cover.png')
+    audio_file = models.FileField(upload_to='static/audio/')
     is_popular = models.BooleanField(default=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, related_name='tracks', on_delete=models.CASCADE)
@@ -50,32 +49,27 @@ class Playlist(models.Model):
     user = models.ForeignKey(User, related_name='playlists', on_delete=models.CASCADE)
     tracks = models.ManyToManyField(Track, related_name='playlists')
     created_at = models.DateTimeField(auto_now_add=True)
-    cover = models.ImageField(upload_to='static/img/', blank=True, default='static/default-cover.png')
+    cover = models.ImageField(upload_to='static/img/', blank=True, default='static/img/default-cover.png')
     is_private = models.BooleanField(default=True)
-    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Subscription(models.Model):
-    FREE = 'free'
-    PREMIUM = 'premium'
-    PRO = 'pro'
-
     SUBSCRIPTION_CHOICES = [
-        (FREE, 'Free'),
-        (PREMIUM, 'Premium'),
-        (PRO, 'Pro'),
+        ('FREE', 'Free'),
+        ('PREMIUM', 'Premium'),
+        ('PRO', 'Pro'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions')
     subscription_type = models.CharField(
         max_length=20,
         choices=SUBSCRIPTION_CHOICES,
-        default=FREE,
+        default='FREE',
     )
     expiry_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.get_subscription_type_display()}"
+        return f"{self.subscription_type}"

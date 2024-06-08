@@ -5,11 +5,15 @@
         <li><a href="{% url 'artist_list' %}">Артисты</a></li>
         <li><a href="{% url 'playlists' %}">Плейлисты</a></li>
         <li><a href="{% url 'subscription' %}">Подписка</a></li>
-
         {% if request.user.is_authenticated %}
+
             <li><a href="{% url 'user_profile' %}">Профиль</a></li>
-            <li><a href="{% url 'my_audio' %}">Мои аудио</a></li>
-            <li><a href="{% url 'my_playlists' %}">Мои плейлисты</a></li>
+            {% if user.has_active_subscription == 'PREMIUM' or user.has_active_subscription == 'PRO' %}
+                <li><a href="{% url 'my_playlists' %}">Мои плейлисты</a></li>
+                {% if user.has_active_subscription == 'PRO' %}
+                    <li><a href="{% url 'my_audio' %}">Мои аудио</a></li>
+                {% endif %}
+            {% endif %}
             <li><a href="{% url 'logout' %}">Выйти</a></li>
             {% if request.user.is_staff %}
                 <li><a href="{% url 'admin:index' %}">Админпанель</a></li>

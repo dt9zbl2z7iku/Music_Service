@@ -10,7 +10,7 @@ class User(AbstractUser):
 
     def has_active_subscription(self):
         subscription = self.subscriptions.filter(expiry_date__gte=date.today()).first()
-        return subscription is not None
+        return subscription.subscription_type
 
     def __str__(self):
         return self.username

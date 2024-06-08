@@ -151,10 +151,10 @@ footer {
 }
 
 .subscription-plans {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(3, minmax(200px, 1fr));
     gap: 20px;
-    justify-content: center;
+    justify-content: space-around;
     margin-top: 2rem;
 }
 
@@ -523,11 +523,6 @@ footer {
     margin-bottom: 10px;
 }
 
-.playlist-description {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 10px;
-}
 
 .playlist-author {
     font-size: 0.9rem;

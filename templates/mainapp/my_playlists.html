@@ -21,7 +21,6 @@
                         <img class="playlist-cover" src="{% if playlist.cover_image %}{{ playlist.cover_image.url }}{% else %}{% static 'img/default-cover.png' %}{% endif %}" alt="Playlist Cover">
                         <div class="playlist-info">
                             <h2 class="playlist-name">{{ playlist.name }}</h2>
-                            <p class="playlist-description">{{ playlist.description }}</p>
                             <div class="playlist-actions">
                                 <a href="{% url 'edit_playlist' playlist.id %}" class="btn btn-edit" style="text-decoration: none; color: inherit">Редактировать</a>
                                 <a href="{% url 'delete_playlist' playlist.id %}" class="btn btn-delete" style="text-decoration: none; color: inherit">Удалить</a>

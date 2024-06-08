@@ -12,12 +12,11 @@ class TrackUploadForm(forms.ModelForm):
 class PlaylistForm(forms.ModelForm):
     class Meta:
         model = Playlist
-        fields = ['name', 'cover', 'is_private', 'description']
+        fields = ['name', 'cover', 'is_private']
         labels = {
             'name': 'Название',
             'cover': 'Обложка',
             'is_private': 'Приватный плейлист',
-            'description': 'Описание',
         }
 
 
