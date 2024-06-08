@@ -74,15 +74,15 @@ WSGI_APPLICATION = 'Music_service.wsgi.application'
 # }
 
 DATABASES = {
-    # 'default': dj_database_url.config(
-    #     default='postgres://music_service_user:UujMM73xmhKeL7oTa6GAhOoMy5AxVOby@dpg-cpbhns5ds78s73evsj20-a.oregon-postgres.render.com/music_service',
-    #     conn_max_age=600,
-    #     ssl_require=True
-    # ),
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'music_service.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='postgres://music_service_user:UujMM73xmhKeL7oTa6GAhOoMy5AxVOby@dpg-cpbhns5ds78s73evsj20-a.oregon-postgres.render.com/music_service',
+        conn_max_age=600,
+        ssl_require=True
+    ),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'music_service.sqlite3',
+    # }
 }
 
 # Password validation
